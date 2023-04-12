@@ -8,7 +8,8 @@ const SignUpInput = (props) => {
 
         if (props.type_value === "file"){
 
-            const {input_lable_value, type_value, input_value, update} = props
+            const {id, input_lable_value, type_value, input_value, update} = props
+            var notification = id + "_notification"
 
             return(<>
 
@@ -16,8 +17,10 @@ const SignUpInput = (props) => {
 
                         <span className="is-block mb-2">{input_lable_value}</span>
 
-                        <input id={input_lable_value} className="input" type={type_value} value={input_value} onChange={(event) => update(event.target.value)} accept="image/*"/>
+                        <input id={id} className="input" type={type_value} value={input_value} onChange={(event) => update(event.target.value)} accept="image/*"/>
                         
+                        <p id={notification}></p>
+
                     </label>
                 </>
 
@@ -26,14 +29,16 @@ const SignUpInput = (props) => {
 
         }
 
-        const {input_lable_value, type_value, input_value, update, placeholder_value, is_required} = props
+        const {id, input_lable_value, type_value, input_value, update, placeholder_value, is_required} = props
 
 
+        var notification = id + "_notification"
         if (is_required){
             return (<label className="is-block mb-4" htmlFor={input_lable_value}>
                 
                 <span className="is-block mb-2">{input_lable_value}</span>
-                <input id={input_lable_value} className="input" type={type_value} placeholder={placeholder_value} value={input_value} onChange={(event) => update(event.target.value)} required/>
+                <input id={id} className="input" type={type_value} placeholder={placeholder_value} value={input_value} onChange={(event) => update(event.target.value)} required/>
+                <p id={notification}></p>
 
             </label>)
 
@@ -42,7 +47,8 @@ const SignUpInput = (props) => {
             return (<label className="is-block mb-4" htmlFor={input_lable_value}>
                 
                 <span className="is-block mb-2">{input_lable_value}</span>
-                <input id={input_lable_value} className="input" type={type_value} placeholder={placeholder_value} value={input_value} onChange={(event) => update(event.target.value)}/>
+                <input id={id} className="input" type={type_value} placeholder={placeholder_value} value={input_value} onChange={(event) => update(event.target.value)}/>
+                <p id={notification}></p>
 
             </label>)
 
