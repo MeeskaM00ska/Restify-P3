@@ -5,13 +5,6 @@ import { useNavigate } from "react-router-dom";
 import EditPropertyForm from "../PropertyEditForm";
 
 const DisplayProperty = (property) => {
-    // const [isEdit, setIsEdit] = useState(false);
-
-    const toggleEdit = () => {
-        isEdit = !isEdit;
-    };
-
-    var isEdit = false;
 
     return (
         <>
@@ -37,12 +30,6 @@ const DisplayProperty = (property) => {
                         <div className="content">
 
                             {
-                                isEdit
-                                ?
-                                <>
-                                    <EditPropertyForm property={property} />
-                                </>
-                                :
                                 <>
                                     <div>
                                                 
@@ -71,12 +58,18 @@ const DisplayProperty = (property) => {
                 >
                     Detail
                 </Link>
+
+                <Link to={`/authenticated/property/${property.property_id}/avail/list`}
+                class="card-footer-item">
+                    Manage Available Time
+                </Link>
                 
                 <Link to={`/authenticated/property/edit/${property.property_id}`}
                 class="card-footer-item"
                 >
                     Edit
                 </Link>
+                
                 <Link to={`/authenticated/property/delete/${property.property_id}`}
                 class="card-footer-item">
                     Delete

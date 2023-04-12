@@ -76,7 +76,7 @@ const MyPropertyList = () => {
             
             
             
-        <div className="container has-text-centered">
+        <div className="container has-text-centered is-hidden-mobile">
                     <div className="columns">
                             <div className="column is-one-third">
 

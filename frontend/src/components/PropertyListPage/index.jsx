@@ -170,7 +170,6 @@ const SearchForm = () => {
                             <div className="column is-three-fifths-desktop is-full-mobile is-three-fifths-tablet">
                                 <input type="text" className="input"
                                     placeholder="Search for a property"
-                                    value={query.search}
                                     onChange={(e) => setQuery({...query, search: e.target.value, page_num: 1})}
                                 />
                             </div>
@@ -216,7 +215,6 @@ const SearchForm = () => {
 
                                         <div className="column is-four-fifths-mobile">
                                             <input type="text" className="input"
-                                            value={query.city}
                                             placeholder="City"
                                             onChange={(e) => setQuery({...query, city: e.target.value, page_num: 1})}
                                             />
@@ -224,7 +222,6 @@ const SearchForm = () => {
 
                                         <div className="column is-four-fifths-mobile">
                                             <input type="text" className="input"
-                                            value={query.country}
                                             placeholder="Country"
                                             onChange={(e) => setQuery({...query, country: e.target.value, page_num: 1})}
                                             />
@@ -239,36 +236,63 @@ const SearchForm = () => {
                                         
                                         <div className="column is-four-fifths-mobile">
                                             <div className="field is-grouped">
-                                                <input type="text" className="input"
-                                                value={query.num_of_guests}
+                                                <input type="number" className="input"
                                                 placeholder="Guests"
                                                 onChange={(e) => setQuery({...query, num_of_guests: e.target.value, page_num: 1})}
+                                                min={1}
                                                 />
                                                 
                                                 <p className=" is-hidden-desktop is-hidden-tablet">&nbsp;</p>
 
-                                                <input type="text" className="input is-hidden-desktop is-hidden-tablet"
-                                                value={query.num_of_beds}
+                                                <input type="number" className="input is-hidden-desktop is-hidden-tablet"
                                                 placeholder="Beds"
                                                 onChange={(e) => setQuery({...query, num_of_beds: e.target.value, page_num: 1})}
+                                                min={1}
                                                 />
                                             </div>
                                         </div>
 
                                         <div className="column is-hidden-mobile">
-                                            <input type="text" className="input"
-                                            value={query.num_of_beds}
+                                            <input type="number" className="input"
                                             placeholder="Beds"
                                             onChange={(e) => setQuery({...query, num_of_beds: e.target.value, page_num: 1})}
+                                            min={1}
                                             />
                                         </div>
 
-                                        <div className="column is-four-fifths-mobile">
-                                            <input type="text" className="input"
-                                            value={query.property_type}
-                                            placeholder="Property type"
-                                            onChange={(e) => setQuery({...query, property_type: e.target.value, page_num: 1})}
-                                            />
+                                        <div className="column">
+
+                                            <p>Type:</p>
+                                        </div>
+
+                                        <div className="column is-four-fifths-mobile field is-grouped">
+                                            <div className="select is-link">
+
+                                                <select
+                                                    onChange={
+                                                        (e) => {
+                                                            console.log(e.target.value);
+                                                            var chosen = e.target.value;
+                                                            if (chosen === "Any"){
+                                                                setQuery({...query, property_type: (""), page_num: 1});
+                                                            }
+                                                            else if (chosen === "House"){
+                                                                setQuery({...query, property_type: ("House"), page_num: 1});
+                                                            }
+                                                            else if (chosen === "Apartment"){
+                                                                setQuery({...query, property_type: ("Apartment"), page_num: 1});
+                                                            }
+                                                            else if (chosen === "Castle"){
+                                                                setQuery({...query, property_type: ("Castle"), page_num: 1});
+                                                            }
+                                                        }
+                                                }>
+                                                    <option>Any</option>
+                                                    <option>House</option>
+                                                    <option>Apartment</option>
+                                                    <option>Castle</option>
+                                                </select>
+                                            </div>
                                         </div>
 
                                         <div className="column is-one-third is-hidden-mobile"></div>

@@ -3,6 +3,8 @@ import SignUpInput from "../SignUpInput"
 import { useState } from "react"
 import $ from "jquery"
 import { Link } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
+import InputBox from "../GeneralInputBox"
 
 
 const property_info=(property_name, city, country, address, num_of_guests, num_of_beds,
@@ -86,8 +88,99 @@ const CreatePropertyForm = () => {
     const [numOfGuests, setNumOfGuests] = useState("")
     const [numOfBeds, setNumOfBeds] = useState("")
     const [propertyType, setPropertyType] = useState("")
+
+    const navigate = useNavigate();
     
     return <>
+
+                <div className="box has-text-centered">
+
+                <div className="hero is-small">
+                    <div className="hero-body">
+
+                    </div>
+                </div>
+                    <div className="columns">
+                    <div className="column is-2 "></div>
+                        <h1 className="is-size-5-mobile is-size-3-desktop title"> Adding a new property </h1>
+
+                        <div className="column is-2 "></div>
+                    </div>
+
+                <div className="hero is-small">
+                    <div className="hero-body">
+
+                    </div>
+                </div>
+
+                <InputBox name='Property Name' id='propertyName' func={setPropertyName} input_type='text' />
+                <InputBox name='City' id='city' func={setCity} input_type='text' />
+                <InputBox name='Country' id='country' func={setCountry} input_type='text' />
+                <InputBox name='Address' id='address' func={setAddress} input_type='text' />
+                <InputBox name='Number of Guests' id='numOfGuests' func={setNumOfGuests} input_type='number' />
+                <InputBox name='Number of Beds' id='numOfBeds' func={setNumOfBeds} input_type='number' />
+                <InputBox name='Property Type' id='propertyType' func={setPropertyType} input_type='text' />
+
+                <div className="columns">
+                    <div className="column is-2 "></div>
+                    <div className="column is-2">
+                        <strong>Images:</strong>
+                    </div>
+                    <div className="column is-block mb-2">
+                        <input type="file" id="images" multiple/>
+                    </div>
+                    <div className="column is-2"></div>
+                </div>
+
+                <div className="hero is-small">
+                    <div className="hero-body">
+
+                    </div>
+                </div>
+
+
+                <div className="columns">
+                    <div className="column is-2 "></div>
+                    <div className="column">
+                        <span>
+                            <input className="button is-link" type="register" value="Go back" id="propertyCreate" onClick={() => navigate(-1)} readOnly/>
+                        </span>
+
+                    </div>
+
+                    <div className="column">
+                        <span>
+                            <button className="button is-link" type="register" value="Create new property" id="propertyCreate" onClick={() => property_info(propertyName, 
+                            city, country, address, numOfGuests, numOfBeds, propertyType)} readOnly>
+                                Create new property
+                            </button>
+                        </span>
+
+                    </div>
+                    <div className="column is-2 "></div>
+                </div>
+
+                
+                    
+                <div className="columns">
+                        <div className="column"></div>
+                        <div className="column block has-text-centered">
+                            <h1 className="is-block mb-2" style={{fontSize: "25px"}} id="notification"> </h1>
+                        </div>
+                        <div className="column"></div>
+                    </div>
+                </div>
+            </>
+
+
+}
+
+
+
+export default CreatePropertyForm
+export {property_info}
+
+{/* <>
         <div className="container">
             <div className="hero is-small">
                 <div className="hero-body">
@@ -98,28 +191,31 @@ const CreatePropertyForm = () => {
                 <div className="column is-6-tablet is-5-desktop is-4-widescreen is-3-fullh">
                     <form className="box p-5">
 
-                        <SignUpInput input_lable_value="Property Name"  input_value={propertyName} update={setPropertyName} placeholder_value="Name of the property" type_value="text" is_required={true}/>
+                        <SignUpInput input_lable_value="Property Name"  input_value={propertyName} update={setPropertyName} placeholder_value="Name of the property" type_value="text"/>
 
-                        <SignUpInput input_lable_value="City"  input_value={city} update={setCity} placeholder_value="City of the property" type_value="text" is_required={true}/>
+                        <SignUpInput input_lable_value="City"  input_value={city} update={setCity} placeholder_value="City of the property" type_value="text"/>
 
-                        <SignUpInput input_lable_value="Country"  input_value={country} update={setCountry} placeholder_value="Country of the property" type_value="text" is_required={true}/>
+                        <SignUpInput input_lable_value="Country"  input_value={country} update={setCountry} placeholder_value="Country of the property" type_value="text"/>
 
-                        <SignUpInput input_lable_value="Address"  input_value={address} update={setAddress} placeholder_value="Address of the property" type_value="text" is_required={true}/>
+                        <SignUpInput input_lable_value="Address"  input_value={address} update={setAddress} placeholder_value="Address of the property" type_value="text"/>
 
-                        <SignUpInput input_lable_value="Number of Guests"  input_value={numOfGuests} update={setNumOfGuests} placeholder_value="Number of Guests" type_value="number" is_required={true}/>
+                        <SignUpInput input_lable_value="Number of Guests"  input_value={numOfGuests} update={setNumOfGuests} placeholder_value="Number of Guests" type_value="number"/>
 
-                        <SignUpInput input_lable_value="Number of Beds"  input_value={numOfBeds} update={setNumOfBeds} placeholder_value="Number of Beds" type_value="number" is_required={true}/>
+                        <SignUpInput input_lable_value="Number of Beds"  input_value={numOfBeds} update={setNumOfBeds} placeholder_value="Number of Beds" type_value="number"/>
 
-                        <SignUpInput input_lable_value="Property Type"  input_value={propertyType} update={setPropertyType} placeholder_value="Property Type" type_value="text" is_required={true}/>
+                        <SignUpInput input_lable_value="Property Type"  input_value={propertyType} update={setPropertyType} placeholder_value="Property Type" type_value="text" />
 
                         <input className="button" type="file" id="images" multiple />
 
                         <text className="is-block mb-2"> </text>
 
 
+                        <input className="button is-link" type="register" value="Go back" id="propertyCreate" onClick={() => navigate(-1)} readOnly/>
                         <span>
-                            <input className="button is-link" type="register" value="Create new property" id="propertyCreate" onClick={() => property_info(propertyName, 
-                            city, country, address, numOfGuests, numOfBeds, propertyType)} readOnly/>
+                            <button className="button is-link" type="register" value="Create new property" id="propertyCreate" onClick={() => property_info(propertyName, 
+                            city, country, address, numOfGuests, numOfBeds, propertyType)} readOnly>
+                                Create new property
+                            </button>
                         </span>
 
                         <div>
@@ -131,7 +227,7 @@ const CreatePropertyForm = () => {
                         </div>
 
 
-                        {/* <div className="mb-4">
+                        <div className="mb-4">
 
                             <span className="is-block mb-2">
                                 Have an account?
@@ -145,7 +241,7 @@ const CreatePropertyForm = () => {
                                 Log in
                             </Link>
                         
-                        </div> */}
+                        </div>
 
                     </form>
                 </div>
@@ -161,12 +257,4 @@ const CreatePropertyForm = () => {
             </div>
         </div>
     
-    </>
-
-
-}
-
-
-
-export default CreatePropertyForm
-export {property_info}
+    </> */}

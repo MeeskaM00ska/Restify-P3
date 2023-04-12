@@ -120,6 +120,12 @@ class AvailabilitySerializer(ModelSerializer):
             property.lowest_avail_price = validated_data['price']
             property.save()
         return super().create(validated_data)
+    
+    def to_representation(self, instance):
+        representation = super().to_representation(instance)
+        representation['avail_id'] = instance.id
+        representation['property_id'] = instance.property.id
+        return representation
 
 class AvailabilityEditSerializer(ModelSerializer):
 

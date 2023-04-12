@@ -15,6 +15,9 @@ import PropertyDeatil from './components/PropertyDetailPage';
 import MyPropertyList from './components/MyPropertyListPage';
 import PropertyEditForm from './components/PropertyEditForm';
 import PropertyDelete from './components/PropertyDelete';
+import AddAvail from './components/CreatePropertyAvailForm';
+import AvailList from './components/AvailList';
+import AvailDelete from './components/PropertyAvailDelete';
 
 
 function App() {
@@ -114,6 +117,18 @@ function App() {
 
             <Route path="/authenticated/property/delete/:propertyID" element={
               < PropertyDelete />
+            } />
+
+            <Route path="/authenticated/property/:propertyID/avail/list" element={
+              < AvailList />
+            } />
+
+            <Route path="/authenticated/property/:propertyID/avail/add" element={
+              < AddAvail />
+            } />
+
+            <Route path="/authenticated/property/:propertyID/avail/:availID/delete" element={
+              < AvailDelete />
             } />
           </Route>
 

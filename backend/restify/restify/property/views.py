@@ -107,6 +107,54 @@ class AvailabilityEdit(UpdateAPIView):
         return Response(self.paginate_queryset(serializer.data))
     
 
+class AvailabilityList(ListAPIView):
+    serializer_class = AvailabilitySerializer
+    permission_classes = []
+
+    def get_queryset(self):
+        property_id = self.kwargs['property_id']
+        return PropertyAvailability.objects.filter(property=property_id)
+    
+    def get(self, request, *args, **kwargs):
+        queryset = self.get_queryset()
+        serializer = AvailabilitySerializer(queryset, many=True)
+
+        # provide total page numbers
+        paginator = PageNumberPagination()
+        paginated_queryset = paginator.paginate_queryset(serializer.data, request)
+        return Response({'avails': self.paginate_queryset(serializer.data), 'total_pages': paginator.page.paginator.num_pages})
+    
+
+class AvailabilityDelete(DestroyAPIView):
+    permission_classes = [IsAuthenticated]
+    serializer_class = AvailabilitySerializer
+
+    def get_object(self):
+        avail_id = self.kwargs['avail_id']
+        user = self.request.user
+        avail = PropertyAvailability.objects.get(id=avail_id)
+        if avail.property.owner != user:
+            raise PermissionDenied("You are not the owner of this property.")
+        return avail
+    
+    def delete(self, request, *args, **kwargs):
+        # delete the availability first
+        avail = PropertyAvailability.objects.get(id=self.kwargs['avail_id'])
+        avail.delete()
+
+        # change the lowest_avail_price of the property
+        avail_list = PropertyAvailability.objects.filter(property=self.kwargs['property_id'])
+        lowest_avail_price = 10000000000
+        for avail in avail_list:
+            print(avail.price)
+            if avail.price < lowest_avail_price:
+                lowest_avail_price = avail.price
+        property = Property.objects.get(id=self.kwargs['property_id'])
+        property.lowest_avail_price = lowest_avail_price
+        property.save()
+        return Response("Availability deleted successfully.")
+    
+
 class ImageCreate(CreateAPIView):
     permission_classes = [IsAuthenticated]
     serializer_class = ImageSerializer
