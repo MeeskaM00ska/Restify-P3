@@ -7,22 +7,27 @@ import AvailCard from "../AvailCard";
 const AvailList = () => {
 
     const [avails, setAvails] = useState([]);
+    const [hasAvail, setHasAvail] = useState(false);
+
+    const [query, setQuery] = useState({page_num: 1});
+    const [numOfPages, setNumOfPages] = useState(1);
 
     var property_id = useParams()['propertyID'];
 
     useEffect(() => {
-        fetch(`http://localhost:8000/property/${property_id}/avail/list/`)
+        fetch(`http://localhost:8000/property/${property_id}/avail/list/?page=${query.page_num}`)
             .then(response => response.json())
             .then(data => {
                 console.log(data.avails);
                 setAvails(data.avails);
+                setHasAvail(data.avails.length > 0);
+                setNumOfPages(data.total_pages);
             })
-    }, [property_id]);
+    }, [property_id, query]);
 
     const displayAvails = avails.map((avail) => {
             return AvailCard(avail);
     });
-
 
     return (
         <>
@@ -42,6 +47,44 @@ const AvailList = () => {
                     </div>
                 </div>
             </div>
+            
+        <div className="container has-text-centered is-hidden-mobile">
+                    <div className="columns">
+                            <div className="column is-one-third">
+
+                            </div>
+
+                            {
+                                query.page_num > 1 ?
+                                <div className="column">
+                                <button className="button is-link" onClick={() => setQuery({...query, page_num: query.page_num - 1})}> Previous </button>
+                                </div>
+                                :
+                                <div className="column">
+                                <button className="button is-link is-hidden" > Previous </button>
+                                </div>
+                            }
+
+                            <div className="column subtitle">
+                                Page {query.page_num} of {numOfPages}
+                            </div>
+                        
+                            {
+                                query.page_num < numOfPages ?
+                                <div className="column">
+                                    <button className="button is-link" onClick={() => setQuery({...query, page_num: query.page_num + 1})}> Next </button>
+                                </div>
+                                :
+                                <div className="column">
+                                    <button className="button is-link is-hidden" > Next </button>
+                                </div>
+                            }
+                            
+                            <div className="column is-one-third">
+
+                            </div>
+                    </div>
+        </div>
 
             <div className="columns">
                 <div className="column is-2">
@@ -50,6 +93,9 @@ const AvailList = () => {
 
                 <div className="column">
                     <div className="card">
+                    {
+                        hasAvail 
+                        ?
                         <div className="card-content">
                             <div className="columns">
                                 <div className="column is-1">
@@ -64,6 +110,19 @@ const AvailList = () => {
                                 </div>
                             </div>
                         </div>
+                        :
+                        <>
+                        <div className="columns">
+                            <div className="column is-1">
+
+                            </div>
+                            <div className="column">
+                                This property has no available dates.
+                            </div>
+                        </div>
+                        </>
+                    }
+
                     </div>
                 </div>
 
@@ -71,6 +130,45 @@ const AvailList = () => {
 
                 </div>
             </div>
+
+            
+        <div className="container has-text-centered is-hidden-mobile">
+                    <div className="columns">
+                            <div className="column is-one-third">
+
+                            </div>
+
+                            {
+                                query.page_num > 1 ?
+                                <div className="column">
+                                <button className="button is-link" onClick={() => setQuery({...query, page_num: query.page_num - 1})}> Previous </button>
+                                </div>
+                                :
+                                <div className="column">
+                                <button className="button is-link is-hidden" > Previous </button>
+                                </div>
+                            }
+
+                            <div className="column subtitle">
+                                Page {query.page_num} of {numOfPages}
+                            </div>
+                        
+                            {
+                                query.page_num < numOfPages ?
+                                <div className="column">
+                                    <button className="button is-link" onClick={() => setQuery({...query, page_num: query.page_num + 1})}> Next </button>
+                                </div>
+                                :
+                                <div className="column">
+                                    <button className="button is-link is-hidden" > Next </button>
+                                </div>
+                            }
+                            
+                            <div className="column is-one-third">
+
+                            </div>
+                    </div>
+        </div>
         </>
     );
 
